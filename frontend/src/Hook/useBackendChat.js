@@ -1,4 +1,4 @@
-export default function useBackendPing() {
+export default function useBackendChat() {
     return function (userId) {
         return fetch(`http://localhost:8245/chat/${userId}`, {
             method: 'POST',

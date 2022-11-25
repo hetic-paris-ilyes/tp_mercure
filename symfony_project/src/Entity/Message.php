@@ -24,6 +24,9 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private $chat;
 
+    #[ORM\Column(type: 'datetimetz')]
+    private $createdAt;
+
     public function getId(): ?int
     {
         return $this-> id;
@@ -61,6 +64,18 @@ class Message
     public function setChat(?Chat $chat): self
     {
         $this->chat = $chat;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
