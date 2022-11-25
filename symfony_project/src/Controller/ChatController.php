@@ -9,10 +9,10 @@ use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PingController extends AbstractController
+class ChatController extends AbstractController
 {
-    #[Route('/ping/{user}', name: 'ping_user', methods: 'POST')]
-    public function pingUser(User $user, HubInterface $hub)
+    #[Route('/chat/{user}', name: 'chat_user', methods: 'POST')]
+    public function chatUser(User $user, HubInterface $hub)
     {
         $update = new Update(
             [
