@@ -6,7 +6,7 @@ use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
-class Message
+class Message implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -78,5 +78,14 @@ class Message
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return[
+            "id" => $this->getId(),
+            "author"=> $this->getAuthor(),
+            "messages" => $this->getContent()
+        ];
     }
 }

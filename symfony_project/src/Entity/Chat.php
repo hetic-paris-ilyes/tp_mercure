@@ -100,4 +100,15 @@ class Chat
 
         return $this;
     }
+
+
+    public function jsonSerialize()
+    {
+        return[
+            "id" => $this->getId(),
+            "label"=> $this->getLabel(),
+            "messages" => $this->getMessages(),
+            "users" =>$this->getUsers()
+        ];
+    }
 }
