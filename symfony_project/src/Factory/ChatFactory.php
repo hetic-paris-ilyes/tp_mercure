@@ -39,15 +39,18 @@ final class ChatFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'label' => self::faker()->text(),
+            'label' => self::faker()->text()
         ];
     }
 
     protected function initialize(): self
     {
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this
-            // ->afterInstantiate(function(Chat $chat): void {})
+        return $this->afterInstantiate(function(Chat $chat): void {
+            //var_dump(App\Factory\UserFactory::random()); die;
+            $chat->addUser(\App\Factory\UserFactory::random()->object());
+            $chat->addUser(\App\Factory\UserFactory::random()->object());
+        })
         ;
     }
 

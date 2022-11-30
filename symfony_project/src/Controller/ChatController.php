@@ -14,6 +14,14 @@ class ChatController extends AbstractController
     #[Route('/chat/{user}', name: 'chat_user', methods: 'POST')]
     public function chatUser(User $user, HubInterface $hub)
     {
+        // requete chat_user (1,2) existe ?  renvoie id room
+        // redirigier vers url /topic/idRoom
+        // si oui getmessages(idroom) 
+      
+
+
+
+
         $update = new Update(
             [
                 "https://example.com/my-private-topic",
