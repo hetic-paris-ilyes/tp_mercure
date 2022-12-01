@@ -36,6 +36,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
+    public function getChatsByUserID ($user_id){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT u, c.id as test
+            FROM App\Entity\User u
+            INNER JOIN u.chats c 
+            WHERE u.id = :id'
+        )->setParameter('id', $user_id);
+
+        return $query->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

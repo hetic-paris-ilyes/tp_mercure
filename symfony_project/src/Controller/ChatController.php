@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Factory\MessageFactory;
+use App\Repository\ChatRepository;
+use App\Repository\MessageRepository;
+use App\Repository\UserRepository;
 use App\Service\CookieHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mercure\HubInterface;
@@ -16,11 +20,7 @@ class ChatController extends AbstractController
     {
         // requete chat_user (1,2) existe ?  renvoie id room
         // redirigier vers url /topic/idRoom
-        // si oui getmessages(idroom) 
-      
-
-
-
+        // si oui getmessages(idroom)
 
         $update = new Update(
             [
@@ -39,5 +39,18 @@ class ChatController extends AbstractController
         return $this->json([
             'message' => 'Ping sent'
         ]);
+    }
+
+    #[Route('/test', name: 'chat_test', methods: 'GET')]
+    public function getChatRoom(UserRepository $userRepository, ChatRepository $chatRepository)
+    {
+        $user_1 = 21;
+        $user2 = 22;
+
+        $chats = $chatRepository->getChatsByUsers();
+
+        return $this->json([
+            'test' => $chats
+        ], 200, [], ['groups' => 'main']);
     }
 }
