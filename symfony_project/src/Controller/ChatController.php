@@ -45,12 +45,21 @@ class ChatController extends AbstractController
     public function getChatRoom(UserRepository $userRepository, ChatRepository $chatRepository)
     {
         $user_1 = 21;
-        $user2 = 22;
+        $user2 = 28;
 
-        $chats = $chatRepository->getChatsByUsers();
-
+        $chatroom = $chatRepository->getChatsByUsers($user_1,$user2);
+        if($chatroom != null){
+            var_dump("Conversation existante");
+            //TODO Récupération des messages de la discussion
+            //TODO Renvoyer resultat en front avec redirection
+        }
+        else{
+            var_dump("Pas de conversation");
+            //TODO Création du chat?
+            // Soit on créer le chat lorsqu'on clique sur l'utilisateur ou sinn lorsqu'on envoi un message...A revoir
+        }
         return $this->json([
-            'test' => $chats
+            'test' => $chatroom
         ], 200, [], ['groups' => 'main']);
     }
 }

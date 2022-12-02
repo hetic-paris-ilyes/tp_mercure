@@ -24,18 +24,15 @@ class ChatRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function getChatsByUsers (){
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT o1
-            FROM App\Entity\Chat o1
-            INNER JOIN App\Entity\User o2 WITH o2.id = o1.id
-            INNER JOIN  App\Entity\User o3 WITH o3.id = o1.id
-            WHERE o2.id = 21
-            AND o3.id = 22'
-        );
-
-        return $query->getOneOrNullResult();
+    public function getChatsByUsers ($id1, $id2){
+        return $this->createQueryBuilder('c')
+            ->select("c.id")
+            ->innerJoin('c.users',  'u', "WITH", 'u.id = :id')
+            ->innerJoin('c.users',  'u2', "WITH", 'u2.id = :id2')
+            ->setParameter('id', $id1)
+            ->setParameter('id2', $id2)
+            ->getQuery()
+            ->getResult();
     }
     // /**
     //  * @return Chat[] Returns an array of Chat objects
