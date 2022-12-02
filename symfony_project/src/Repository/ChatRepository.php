@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Chat;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,7 +33,24 @@ class ChatRepository extends ServiceEntityRepository
             ->setParameter('id', $id1)
             ->setParameter('id2', $id2)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
+    }
+
+    public function newChat ($id1, $id2, UserRepository $userRepository){
+
+        $entityManager = $this->getEntityManager();
+        $newChat = new Chat();
+        $newChat->setLabel("Chat test");
+
+        $user1 = $userRepository->findOneById($id1);
+        $user2 = $userRepository->findOneById($id2);
+
+        $newChat->addUser($user1);
+        $newChat->addUser($user2);
+        $entityManager->persist($newChat);
+        $entityManager->flush();
+
+        return $newChat->getId();
     }
     // /**
     //  * @return Chat[] Returns an array of Chat objects

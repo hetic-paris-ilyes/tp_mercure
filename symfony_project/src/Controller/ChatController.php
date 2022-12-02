@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Chat;
 use App\Factory\MessageFactory;
 use App\Repository\ChatRepository;
 use App\Repository\MessageRepository;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class ChatController extends AbstractController
 {
@@ -42,24 +44,29 @@ class ChatController extends AbstractController
     }
 
     #[Route('/test', name: 'chat_test', methods: 'GET')]
-    public function getChatRoom(UserRepository $userRepository, ChatRepository $chatRepository)
+    public function getChatRoom(UserRepository $userRepository, ChatRepository $chatRepository, Request $request)
     {
-        $user_1 = 21;
-        $user2 = 28;
-
-        $chatroom = $chatRepository->getChatsByUsers($user_1,$user2);
-        if($chatroom != null){
+        $user_1 = $_GET["userTo"];
+        $user_2 = $_GET["myUser"];
+        
+        $chatroom = $chatRepository->getChatsByUsers($user_1,$user_2);
+        if($chatroom !== null){
             var_dump("Conversation existante");
+            $idChat = $chatroom["id"];
             //TODO Récupération des messages de la discussion
             //TODO Renvoyer resultat en front avec redirection
         }
         else{
-            var_dump("Pas de conversation");
+            var_dump("Pas de conv");
+            $idChat = $chatRepository->newChat($user_1, $user_2, $userRepository);
+            
             //TODO Création du chat?
             // Soit on créer le chat lorsqu'on clique sur l'utilisateur ou sinn lorsqu'on envoi un message...A revoir
         }
+
+
         return $this->json([
-            'test' => $chatroom
+            'test' => $idChat
         ], 200, [], ['groups' => 'main']);
     }
 }
