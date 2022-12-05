@@ -52,6 +52,18 @@ class ChatRepository extends ServiceEntityRepository
 
         return $newChat->getId();
     }
+
+    public function getAllMessagesOrderByDate(int $chat_id)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $chat_id)
+            ->innerJoin('c.messages', 'messages')
+            ->addSelect('messages')
+            ->orderBy('messages.createdAt', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+    }
     // /**
     //  * @return Chat[] Returns an array of Chat objects
     //  */

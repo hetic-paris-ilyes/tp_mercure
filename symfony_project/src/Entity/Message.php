@@ -20,7 +20,7 @@ class Message implements \JsonSerializable
     #[ORM\JoinColumn(nullable: false)]
     private $author;
 
-    #[ORM\ManyToOne(targetEntity: Chat::class, inversedBy: 'messages')]
+    #[ORM\ManyToOne(targetEntity: Chat::class,fetch: "EAGER", inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
     private $chat;
 

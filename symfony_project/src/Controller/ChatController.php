@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ChatController extends AbstractController
 {
-    #[Route('/chat/{user}', name: 'chat_user', methods: 'POST')]
+    #[Route('/create', name: 'chat_post', methods: 'POST')]
     public function chatUser(User $user, HubInterface $hub)
     {
         // requete chat_user (1,2) existe ?  renvoie id room
@@ -53,20 +53,22 @@ class ChatController extends AbstractController
         if($chatroom !== null){
             var_dump("Conversation existante");
             $idChat = $chatroom["id"];
-            //TODO Récupération des messages de la discussion
-            //TODO Renvoyer resultat en front avec redirection
+            return $this->redirectToRoute('chat_messages', ['id' => $idChat]);
         }
         else{
             var_dump("Pas de conv");
             $idChat = $chatRepository->newChat($user_1, $user_2, $userRepository);
-            
-            //TODO Création du chat?
-            // Soit on créer le chat lorsqu'on clique sur l'utilisateur ou sinn lorsqu'on envoi un message...A revoir
+            return $this->redirectToRoute('chat_messages', ['id' => $idChat]);
         }
+    }
 
-
+    #[Route('/chat/{id}', name: 'chat_messages', methods: 'GET')]
+    public function getChatMessages(ChatRepository     $chatRepository,
+                                    int             $id): \Symfony\Component\HttpFoundation\JsonResponse
+    {
+        $this->redirect("http://localhost:3000/chat/7")
         return $this->json([
-            'test' => $idChat
+            'chat' => $chatRepository->getAllMessagesOrderByDate(9)
         ], 200, [], ['groups' => 'main']);
     }
 }
