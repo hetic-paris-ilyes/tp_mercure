@@ -22,54 +22,48 @@ class ChatController extends AbstractController
     {
         $user_1 = $_GET["userTo"];
         $user_2 = $_GET["myUser"];
-        
-        $chatroom = $chatRepository->getChatsByUsers($user_1,$user_2);
-        if($chatroom !== null){
+
+        $chatroom = $chatRepository->getChatsByUsers($user_1, $user_2);
+        if ($chatroom !== null) {
             var_dump("Conversation existante");
             $idChat = $chatroom["id"];
             //return $this->redirectToRoute('chat_messages', ['id' => $idChat]);
-        }
-        else{
+        } else {
             var_dump("Pas de conv");
             $idChat = $chatRepository->newChat($user_1, $user_2, $userRepository);
             //return $this->redirectToRoute('chat_messages', ['id' => $idChat]);
         }
         return $this->json([
-            'id_chat' => $idChat]);
+            'id_chat' => $idChat
+        ]);
     }
 
     #[Route('/chat/{id}', name: 'chat_messages', methods: 'GET')]
-    public function getChatMessages(ChatRepository     $chatRepository,
-                                    int             $id): \Symfony\Component\HttpFoundation\JsonResponse
-    {
+    public function getChatMessages(
+        ChatRepository     $chatRepository,
+        int             $id
+    ): \Symfony\Component\HttpFoundation\JsonResponse {
         return $this->json([
             'chat' => $chatRepository->getAllMessagesOrderByDate($id)
         ], 200, [], ['groups' => 'main']);
     }
 
-    #[Route('/chat/{id}/createMessage', name: 'chat_post', methods: 'POST')]
-    public function chatMessage(HubInterface $hub,Request $request)
+    #[Route('/chat/createMessage', name: 'chat_post', methods: 'POST')]
+    public function chatMessage(HubInterface $hub, Request $request, MessageRepository $messageRepository,  UserRepository $userRepository, ChatRepository $chatRepository)
     {
         $post_data = json_decode($request->getContent(), true);
-        //$date = $post_data['date'];
-        var_dump($post_data);
-        /*$update = new Update(
-            [
-                "https://example.com/my-private-topic",
-                "https://example.com/user/{$user->getId()}/?topic=" . urlencode("https://example.com/my-private-topic")
-            ],
-            json_encode([
-                'user' => $user->getUsername(),
-                'id' => $user->getId()
-            ]),
-            true
-        );
+        $content = $post_data['content'];
+        $chatId = intval($post_data['chatId']);
+        $authorId = intval($post_data['authorId']);
 
-        $hub->publish($update);
-*/
+        if ($content == null || $chatId == null || $authorId == null) {
+            var_dump(("Il manque un champ"));
+        }
+
+        $messageId = $messageRepository->newMessage($authorId, $chatId, $content, $userRepository, $chatRepository);
+
         return $this->json([
-            'message' => 'Ping sent'
+            'message' => 'Message sent', $messageId
         ]);
     }
-
 }
