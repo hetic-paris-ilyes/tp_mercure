@@ -2,8 +2,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import NeedAuth from "./Auth/NeedAuth";
 import UserList from "./Component/UserList";
+
 import Login from "./Auth/Login";
-import UserProvider from "./Context/UserContext";
+import UserProvider, {userContext} from "./Context/UserContext";
+import ChatRoom from "./Component/ChatRoom";
+import Layout from "./Component/Layout";
+import {useContext, useState} from "react";
 
 function App() {
     return (
@@ -11,9 +15,10 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={
-                        <NeedAuth>
-                            <UserList/>
-                        </NeedAuth>
+                        <Layout/>
+                    }/>
+                    <Route path='/chat/:chatID' element={
+                        <Layout><ChatRoom/></Layout>
                     }/>
                     <Route path='/login' element={<Login/>}/>
                 </Routes>

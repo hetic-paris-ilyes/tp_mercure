@@ -2,6 +2,7 @@ import {useLocation, useNavigate, navigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {userContext} from "../Context/UserContext";
 import useGetJWT from "../Hook/useGetJWT";
+import Cookies from 'universal-cookie';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -11,7 +12,8 @@ export default function Login() {
     const getJWT = useGetJWT()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loggedUser, setLoggedUser] = useContext(userContext);
+    const {setUser} = useContext(userContext);
+
 
     const handleUsername = (e) => {
         setUsername(e.target.value);
@@ -25,7 +27,10 @@ export default function Login() {
         e.preventDefault();
         getJWT(username, password).then(data => {
             if (data.JWT) {
-                setLoggedUser(data.JWT);
+                setUser(data.JWT);
+                const cookies = new Cookies();
+                cookies.set('MyUser', data.JWT, { path: '/' });
+                console.log(cookies.get('MyUser'));
                 navigate(from, {replace: true});
             } else {
                 console.log(data)
