@@ -29,17 +29,17 @@ export default function ChatRoom () {
   const loggedUserID = myUser?.mercure.payload.userid
   const getMessagesChat = useGetMessagesChat()
 
-  const getContact = async messages => {
+  const getContact = messages => {
     const tmp_members = messages?.map(message => {
         if (message.author.id !== loggedUserID) return message.author
     })
     setContacts(tmp_members)
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     getMessagesChat(chatID).then(data => setChat(data.chat[0]))
-    await getContact(chat?.messages)
-  }, [chatID])
+    getContact(chat?.messages)
+  }, [chatID, chat])
 
   //useparams
   const handleSubmit = event => {
@@ -62,7 +62,7 @@ export default function ChatRoom () {
     <Row className='main-chat'>
       <Row className='header-chat'>
         <h6 className='session-user'>
-          {contacts.length > 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : null }
+          {contacts?.length > 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : null }
         </h6>
       </Row>
 
