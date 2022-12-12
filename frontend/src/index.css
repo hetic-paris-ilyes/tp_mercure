@@ -291,3 +291,19 @@ hr {
     padding-top: 0px !important;
   }
 }
+
+.message-preview {
+  display: block;
+  white-space: nowrap;
+  width: 15ch; 
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.message-content-preview {
+  display: block;
+  white-space: nowrap;
+  width: 40ch; 
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
