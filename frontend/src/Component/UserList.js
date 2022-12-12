@@ -21,7 +21,7 @@ export default function UserList () {
 
   const { user } = useContext(userContext)
   const getUserList = useGetUserList()
-  const useGetMessagesChat = useGetMessagesChat()
+  const getMessagesChat = useGetMessagesChat()
   const myUser = parseJwt(user)
   const loggedUserID = user ? myUser.mercure.payload.userid : null
   console.log('loggedUserId : ', loggedUserID)
@@ -50,7 +50,7 @@ export default function UserList () {
   }
   useEffect(() => {
     getUserList().then(data => setUserList(data.users))
-
+    getMessagesChat(4).then(data => console.log(data))
     /*const url = new URL('http://localhost:9090/.well-known/mercure');
         url.searchParams.append('topic', 'https://example.com/my-private-topic');
 
