@@ -4,6 +4,5 @@ export default function useGetRoomId() {
             method: 'GET',
         })
             .then(data => data.json())
-            .then(data => data.message)
     }
 }
