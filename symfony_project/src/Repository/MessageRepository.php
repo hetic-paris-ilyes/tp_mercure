@@ -33,7 +33,7 @@ class MessageRepository extends ServiceEntityRepository
 
         $myChat = $chatRepository->findOneById($chatId);
         $newMessage->setChat($myChat);
-        $newMessage->setCreatedAt();
+        $newMessage->setCreatedAt(new \DateTime());
 
         $entityManager->persist($newMessage);
         $entityManager->flush();
