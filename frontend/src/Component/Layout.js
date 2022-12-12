@@ -36,15 +36,15 @@ export default function Layout (props) {
           <Col className='p-0 m-0 nav-wrapper'>
             <Nav className='navbar'>
               <button
-                class='navbar-toggler'
+                className='navbar-toggler'
                 type='button'
                 value={open}
                 onClick={e => setOpen(!e.target.value)}
               >
-                <span class='navbar-toggler-icon'></span>
+                <span className='navbar-toggler-icon'></span>
               </button>
               <div
-                class='menu-wrapper'
+                className='menu-wrapper'
                 style={{display: open ? "block" : "none", width: "100%"}}
               >
                 {loggedUserName ? (

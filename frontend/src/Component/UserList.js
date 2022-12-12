@@ -38,7 +38,7 @@ export default function UserList () {
       .querySelector('h1')
       .insertAdjacentHTML(
         'afterend',
-        '<div class="alert alert-success w-75 mx-auto">Ping !</div>'
+        '<div className="alert alert-success w-75 mx-auto">Ping !</div>'
       )
     window.setTimeout(() => {
       const $alert = document.querySelector('.alert')
