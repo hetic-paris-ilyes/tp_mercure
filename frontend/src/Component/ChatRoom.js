@@ -33,8 +33,7 @@ export default function ChatRoom () {
 
     var myMessage= JSON.stringify(obj);
     const sendMessage = await usePostMessage(myMessage);
-
-    console.log("sendMessage",sendMessage().then(console.log("then")));
+    console.log(sendMessage);
   }
   return (
     <Row className='main-chat'>

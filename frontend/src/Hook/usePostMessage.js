@@ -1,10 +1,13 @@
 export default async function usePostMessage(dataToSend) {
-    console.log('hook', dataToSend);
-    return async function (dataToSend) {
-        return fetch(`http://localhost:8245/createMessage`, {
+    try {
+        const res = await fetch('http://localhost:8245/createMessage', {
             method: 'POST',
             body: dataToSend
         })
-            .then(data => data)
+        if (res) console.log("message sent")
+        return res
+    } catch (error) {
+        return error;
     }
+
 }
