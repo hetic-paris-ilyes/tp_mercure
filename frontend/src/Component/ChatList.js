@@ -41,12 +41,10 @@ export default function ChatList ({ chat }) {
     })
     return render
   }
-  console.log(chat, 'CHAT')
   return (
     <div>
       {chat
         ? chat.map(data => {
-            console.log(data, 'DATA')
             return (
            
               <a

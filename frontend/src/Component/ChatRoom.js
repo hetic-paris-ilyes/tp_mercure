@@ -1,12 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useContext } from 'react'
-import { Send } from 'react-feather'
+
+import { useContext, useState, useEffect } from 'react'
+import { Loader, Send } from 'react-feather'
 import { Col, Container, Row, Input, Form } from 'reactstrap'
 import { userContext } from '../Context/UserContext'
 import ContactPill from './ContactPill'
+import { useLocation } from 'react-router-dom'
+import useGetMessagesChat from '../Hook/useGetMessagesChat'
 import usePostMessage from '../Hook/usePostMessage'
 
 export default function ChatRoom () {
+  const location = useLocation()
+  const parseUrl = location.pathname.split('/')
+  const chatID = parseUrl[parseUrl.length - 1]
+  const [chat, setChat] = useState([])
+  const [contacts, setContacts] = useState([])
+
   const parseJwt = token => {
     if (!token) {
       return
@@ -17,35 +26,65 @@ export default function ChatRoom () {
   }
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
-  console.log('ChatRoom.user : ', user)
+  const loggedUserID = myUser?.mercure.payload.userid
+  const getMessagesChat = useGetMessagesChat()
+
+  const getContact = messages => {
+    const tmp_members = messages?.map(message => {
+        if (message.author.id !== loggedUserID) return message.author
+    })
+    setContacts(tmp_members)
+  }
+
+  useEffect(() => {
+    getMessagesChat(chatID).then(data => setChat(data.chat[0]))
+    getContact(chat?.messages)
+  }, [chatID, chat])
+
   //useparams
   const handleSubmit = async (event) => {
     event.preventDefault();
     const chatId = 21; //rajouter chatId
     const content = event.target[0].value;
-    // const authorId = myUser.mercure.payload.userid; real id user
-    const authorId = 120;
 
-    var obj = new Object();
-    obj.content  = content;
-    obj.chatId = chatId;
-    obj.authorId = authorId;
+    // const authorId = myUser.mercure.payload.userid; real id user
+    const authorId = 120
+
+    var obj = new Object()
+    obj.content = content
+    obj.chatId = chatId
+    obj.authorId = authorId
 
     var myMessage= JSON.stringify(obj);
     const sendMessage = await usePostMessage(myMessage);
-    console.log(sendMessage);
+
   }
+
   return (
     <Row className='main-chat'>
       <Row className='header-chat'>
         <h6 className='session-user'>
-          <ContactPill className='' userName={'Contact 1'} /> Contact 1
+          {contacts?.length > 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : null }
         </h6>
       </Row>
 
       <Row className='section-chat'>
         <div className='messages'>
-          <div className='message contact'>
+          {chat?.messages?.map(message => {
+            const author = message.author
+            return (
+              <div
+                className={`message ${
+                  loggedUserID === author.id ? 'currentUser' : 'contact'
+                }`}
+                key={message.id}
+              >
+                <ContactPill className='' userName={author.username} />
+                <p>{message.content}</p>
+              </div>
+            )
+          })}
+          {/* <div className='message contact'>
             <ContactPill className='' userName={'Contact 1'} />
             <p>
               lorelscn ujsdnhvksn cfsdvhkdhvn cksjvbskvnkncs vzskvhsikv
@@ -59,7 +98,7 @@ export default function ChatRoom () {
               lorelscn ujsdnhvksn cfsdvhkdhvn cksjvbskvnkncs vzskvhsikv
               svknbdkvs{' '}
             </p>
-          </div>
+          </div> */}
         </div>
       </Row>
       <Row className='chat-tools'>
