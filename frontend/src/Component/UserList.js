@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import useGetUserList from '../Hook/useGetUserList'
-import useBackendChat from '../Hook/useBackendChat'
+import useGetMessagesChat from '../Hook/useGetMessagesChat'
 import { useContext } from 'react'
 import { userContext } from '../Context/UserContext'
 import { Link } from 'react-router-dom'
@@ -21,18 +21,18 @@ export default function UserList () {
 
   const { user } = useContext(userContext)
   const getUserList = useGetUserList()
-  const backendChat = useBackendChat()
+  const useGetMessagesChat = useGetMessagesChat()
   const myUser = parseJwt(user)
   const loggedUserID = user ? myUser.mercure.payload.userid : null
   console.log('loggedUserId : ', loggedUserID)
 
   //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    const userId = e.target[0].value
-    backendChat(userId).then(data => console.log('data : ', data))
-  }
+  // const handleSubmit = e => {
+  //   e.preventDefault()
+  //   const userId = e.target[0].value
+  //   backendChat(userId).then(data => console.log('data : ', data))
+  // }
   console.log('UserList.user : ', user)
 
   const handleMessage = e => {
