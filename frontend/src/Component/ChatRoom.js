@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import { useContext, useState, useEffect } from 'react'
 import { Loader, Send } from 'react-feather'
 import { Col, Container, Row, Input, Form } from 'reactstrap'
@@ -5,6 +7,8 @@ import { userContext } from '../Context/UserContext'
 import ContactPill from './ContactPill'
 import { useLocation } from 'react-router-dom';
 import useGetMessagesChat from '../Hook/useGetMessagesChat'
+import usePostMessage from '../Hook/usePostMessage'
+
 
 export default function ChatRoom () {
 
@@ -32,6 +36,21 @@ const [chat, setChat] = useState([])
   
 
   //useparams
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const chatId = 21; //rajouter chatId
+    const content = event.target[0].value;
+    // const authorId = myUser.mercure.payload.userid; real id user
+    const authorId = 120;
+
+    var obj = new Object();
+    obj.content  = content;
+    obj.chatId = chatId;
+    obj.authorId = authorId;
+
+    var myMessage= JSON.stringify(obj);
+    usePostMessage(myMessage);
+  }
   return (
     <Row className='main-chat'>
         {console.log(chat, "CHATHHHHHHH")}
@@ -61,7 +80,7 @@ const [chat, setChat] = useState([])
         </div>
       </Row>
       <Row className='chat-tools'>
-        <Form className='d-flex'>
+        <Form className='d-flex' onSubmit={handleSubmit}>
           <Input type='textarea' placeholder='Ecrivez votre message ...' />
           <button type='submit'>
             <Send size={35} />
