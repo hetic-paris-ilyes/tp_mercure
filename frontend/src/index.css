@@ -11,3 +11,234 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main-chat {
+  height: 100%;
+  background-image: url("https://qph.fs.quoracdn.net/main-qimg-8926de31f390158d70d7c77dee2f89c1-c");
+  margin: 0;
+}
+
+.section-chat {
+  display: flex !important;
+  flex-direction: column;
+  flex-wrap: nowrap !important;
+  gap: 15px;
+  padding: 100px 5% 15px 5% !important;
+  min-height: 60%;
+  max-height: 80%;
+  overflow: hidden scroll;
+}
+
+.section-chat::-webkit-scrollbar {
+  width: 5px;
+  /* width of the entire scrollbar */
+}
+
+.section-chat::-webkit-scrollbar-track {
+  background: #D3DBE5;
+  /* color of the tracking area */
+}
+
+.section-chat::-webkit-scrollbar-thumb {
+  background-color: #7367f0;
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+}
+
+.header-chat {
+  background-color: white;
+  position: fixed;
+  top: 0;
+  padding: 15px 0;
+  z-index: 1000;
+  box-shadow: 0 0 15px -10px black;
+  margin-left: 0 !important;
+}
+
+.btn-contact {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-contact svg {
+  visibility: hidden;
+}
+
+.btn-contact:hover svg {
+  visibility: visible;
+}
+
+.list-title {
+  color: #7367f0;
+  margin: 0 0 15px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.profile-picture {
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  background-color: #D1DBE4;
+  padding: 20px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #D1DBE4;
+  font-size: 14px;
+  box-shadow: 0 0 8px -5px black;
+
+}
+
+.profile-picture.currentUser {
+  background-color: #7367f0;
+  color: white;
+  border: 1px solid#7367f0;
+}
+
+.session-user {
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: nowrap; */
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+}
+
+.message {
+  gap: 25px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+
+.message p {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgb(34 41 47 / 12%);
+  width: 80% !important;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 0;
+}
+
+.message i {
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.message.contact {
+}
+
+.message.currentUser {
+  flex-direction: row-reverse;
+}
+
+.message.currentUser p {
+  background-color: #7267f022;
+}
+
+.message.contact .profile-picture {
+  float: left;
+}
+
+.message.currentUser .profile-picture {
+  float: right;
+}
+
+.menu-scrollable div {
+  height: 40vh;
+  overflow: hidden scroll;
+}
+
+.sidebar {
+  height: 100%;
+  box-shadow: 0px 0px 8px 0 rgb(34 41 47 / 12%);
+  position: relative;
+  z-index: 4000;
+}
+
+.main {
+  min-height: 100%;
+}
+
+.menu-scrollable div::-webkit-scrollbar {
+  width: 5px;
+  /* width of the entire scrollbar */
+}
+
+.menu-scrollable div::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  /* color of the tracking area */
+}
+
+.menu-scrollable div::-webkit-scrollbar-thumb {
+  background-color: #7367f0;
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+}
+
+
+.sidebar .session-user {
+  margin: 15px 0;
+}
+
+hr {
+  border: 1px solid #7367f0 !important;
+}
+
+.chat-tools {
+  background-color: white;
+  padding: 15px 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-tools form {
+  gap: 15px;
+}
+.chat-tools button {
+    background-color: #7367f0;
+    border-radius: 50%;
+    padding: 15px;
+    width: 55px;
+    height: 55px;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-tools button svg {
+  stroke: white;
+}
+
+.row {
+  margin-left: 0 !important;
+}

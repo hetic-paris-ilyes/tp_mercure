@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+
+.section-chat {
+  height: 100vh;
+  background-image: url("https://qph.fs.quoracdn.net/main-qimg-8926de31f390158d70d7c77dee2f89c1-c");
+}
