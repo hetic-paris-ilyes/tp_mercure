@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useContext } from 'react'
 import { Send } from 'react-feather'
 import { Col, Container, Row, Input, Form } from 'reactstrap'
 import { userContext } from '../Context/UserContext'
 import ContactPill from './ContactPill'
+import usePostMessage from '../Hook/usePostMessage'
 
 export default function ChatRoom () {
   const parseJwt = token => {
@@ -17,6 +19,21 @@ export default function ChatRoom () {
   const myUser = parseJwt(user)
   console.log('ChatRoom.user : ', user)
   //useparams
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const chatId = 21; //rajouter chatId
+    const content = event.target[0].value;
+    // const authorId = myUser.mercure.payload.userid; real id user
+    const authorId = 120;
+
+    var obj = new Object();
+    obj.content  = content;
+    obj.chatId = chatId;
+    obj.authorId = authorId;
+
+    var myMessage= JSON.stringify(obj);
+    usePostMessage(myMessage);
+  }
   return (
     <Row className='main-chat'>
       <Row className='header-chat'>
@@ -45,7 +62,7 @@ export default function ChatRoom () {
         </div>
       </Row>
       <Row className='chat-tools'>
-        <Form className='d-flex'>
+        <Form className='d-flex' onSubmit={handleSubmit}>
           <Input type='textarea' placeholder='Ecrivez votre message ...' />
           <button type='submit'>
             <Send size={35} />

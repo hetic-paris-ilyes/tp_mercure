@@ -60,6 +60,8 @@ class ChatRepository extends ServiceEntityRepository
             ->setParameter('val', $chat_id)
             ->innerJoin('c.messages', 'messages')
             ->addSelect('messages')
+            ->innerJoin('messages.author', 'author')
+            ->addSelect('author')
             ->orderBy('messages.createdAt', 'ASC')
             ->getQuery()
             ->getArrayResult();
