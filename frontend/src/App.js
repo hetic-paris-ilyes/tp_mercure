@@ -18,7 +18,7 @@ function App() {
                         <Layout/>
                     }/>
                     <Route path='/chat/:chatID' element={
-                        <Layout><ChatRoom/></Layout>
+                        <Layout><ChatRoom /></Layout>
                     }/>
                     <Route path='/login' element={<Login/>}/>
                 </Routes>

@@ -1,10 +1,18 @@
-import { useContext } from 'react'
-import { Send } from 'react-feather'
+import { useContext, useState, useEffect } from 'react'
+import { Loader, Send } from 'react-feather'
 import { Col, Container, Row, Input, Form } from 'reactstrap'
 import { userContext } from '../Context/UserContext'
 import ContactPill from './ContactPill'
+import { useLocation } from 'react-router-dom';
+import useGetMessagesChat from '../Hook/useGetMessagesChat'
 
 export default function ChatRoom () {
+
+const location = useLocation();
+const parseUrl = location.pathname.split("/")
+const chatID = parseUrl[parseUrl.length-1]
+const [chat, setChat] = useState([])
+
   const parseJwt = token => {
     if (!token) {
       return
@@ -16,9 +24,17 @@ export default function ChatRoom () {
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
   console.log('ChatRoom.user : ', user)
+  const getMessagesChat = useGetMessagesChat()
+
+  useEffect(() => {
+    getMessagesChat(chatID).then(data => setChat(data.chat[0]))
+  }, [chatID])
+  
+
   //useparams
   return (
     <Row className='main-chat'>
+        {console.log(chat, "CHATHHHHHHH")}
       <Row className='header-chat'>
         <h6 className='session-user'>
           <ContactPill className='' userName={'Contact 1'} /> Contact 1
