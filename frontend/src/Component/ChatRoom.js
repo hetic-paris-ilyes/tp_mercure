@@ -19,7 +19,7 @@ export default function ChatRoom () {
   const myUser = parseJwt(user)
   console.log('ChatRoom.user : ', user)
   //useparams
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const chatId = 21; //rajouter chatId
     const content = event.target[0].value;
@@ -32,7 +32,9 @@ export default function ChatRoom () {
     obj.authorId = authorId;
 
     var myMessage= JSON.stringify(obj);
-    usePostMessage(myMessage);
+    const sendMessage = await usePostMessage(myMessage);
+
+    console.log("sendMessage",sendMessage().then(console.log("then")));
   }
   return (
     <Row className='main-chat'>
