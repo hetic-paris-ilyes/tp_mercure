@@ -24,7 +24,6 @@ export default function UserList () {
   const getMessagesChat = useGetMessagesChat()
   const myUser = parseJwt(user)
   const loggedUserID = user ? myUser.mercure.payload.userid : null
-//   console.log('loggedUserId : ', loggedUserID)
 
   //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
 
@@ -33,7 +32,6 @@ export default function UserList () {
   //   const userId = e.target[0].value
   //   backendChat(userId).then(data => console.log('data : ', data))
   // }
-  console.log('UserList.user : ', user)
 
   const handleMessage = e => {
     document
