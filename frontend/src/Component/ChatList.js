@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react'
 import useGetUserList from '../Hook/useGetUserList'
 import useGetAllChats from '../Hook/useGetAllChats'
-import useBackendChat from '../Hook/useBackendChat'
+import useGetMessagesChat from '../Hook/useGetMessagesChat'
 import { useContext } from 'react'
 import { userContext } from '../Context/UserContext'
 import { Link } from 'react-router-dom'
 import { MessageCircle } from 'react-feather'
 import ContactPill from './ContactPill'
+
+const TestChat = ({ chatId }) => {
+  const getChat = useGetMessagesChat()
+  const [chat, setChat] = useState({})
+
+  useEffect(() => {
+    getChat(chatId).then(res => setChat(res))
+  }, [])
+
+  return <p>chat</p>
+}
 
 export default function ChatList () {
   const parseJwt = token => {
@@ -19,20 +30,21 @@ export default function ChatList () {
   }
 
   const [chatList, setChatList] = useState([])
+  const [testi, setTesti] = useState([])
 
   const { user } = useContext(userContext)
-  const backendChat = useBackendChat()
   const myUser = parseJwt(user)
   const loggedUserID = user ? myUser.mercure.payload.userid : null
   const getAllChats = useGetAllChats(loggedUserID)
+  const getAllMessages = useGetMessagesChat()
 
   //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    const userId = e.target[0].value
-    backendChat(userId).then(data => console.log('data : ', data))
-  }
+  // const handleSubmit = e => {
+  //   e.preventDefault()
+  //   const userId = e.target[0].value
+  //   getChat(userId).then(data => console.log('data : ', data))
+  // }
 
   const handleMessage = e => {
     document
@@ -49,30 +61,17 @@ export default function ChatList () {
   }
   useEffect(() => {
     getAllChats(loggedUserID).then(data => setChatList(data.Chats))
+    getAllMessages(4).then(data => setTesti(data))
+    console.log("les datas:", testi)
   }, [])
 
-  const renderChatList = (chatList) => {
-    if (chatList.length > 0) {
-      chatList.map(chat => {
-        <form key={chat.id} className='contact-wrapper'>
-          {console.log("Chat detail:", chat)}
-            <a
-              className='btn btn-light w-100 text-start btn-contact'
-              type='submit'
-              value={chat.id}
-              href={`/chat/${chat.id}`}
-            >
-              {/* <ContactPill userName={userItem.username} />
-              {userItem.username} <MessageCircle size={25} /> */}
-            </a>
-          </form>
-      })
-    }
-  }
   return (
     <div>
-      {console.log("ChatList : ", chatList)}
-        {renderChatList(chatList)}
+      {chatList.length !== 0
+        ? chatList.map(chat => {
+            return <TestChat chatId={chat} />
+          })
+        : null}
     </div>
   )
 }

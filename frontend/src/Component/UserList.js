@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import useGetUserList from '../Hook/useGetUserList'
-import useGetMessagesChat from '../Hook/useGetMessagesChat'
 import { useContext } from 'react'
 import { userContext } from '../Context/UserContext'
 import { Link } from 'react-router-dom'
 import { MessageCircle } from 'react-feather'
 import ContactPill from './ContactPill'
+import useGetMessagesChat from '../Hook/useGetMessagesChat'
 
 export default function UserList () {
   const parseJwt = token => {
@@ -21,7 +21,7 @@ export default function UserList () {
 
   const { user } = useContext(userContext)
   const getUserList = useGetUserList()
-  const useGetMessagesChat = useGetMessagesChat()
+  const getMessagesChat = useGetMessagesChat()
   const myUser = parseJwt(user)
   const loggedUserID = user ? myUser.mercure.payload.userid : null
 //   console.log('loggedUserId : ', loggedUserID)

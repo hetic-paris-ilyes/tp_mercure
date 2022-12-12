@@ -20,7 +20,6 @@ export default function Layout (props) {
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
   const loggedUserName = user ? myUser.mercure.payload.username : null
-  console.log("OPEN", open)
   return (
       <Row className='main'>
         <NeedAuth>
