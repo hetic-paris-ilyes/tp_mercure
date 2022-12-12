@@ -41,14 +41,33 @@ export default function ChatRoom () {
     getContact(chat?.messages)
   }, [chatID, chat])
 
+  /*
+   const handleMessage = (e) => {
+        console.log("Ca marche");
+    }
+  useEffect(() => {
+    const url = new URL('http://localhost:9090/.well-known/mercure');
+    url.searchParams.append('topic', 'https://example.com/my-private-topic');
+
+    const eventSource = new EventSource(url, {withCredentials: true});
+    eventSource.onmessage = handleMessage;
+
+    return () => {
+      eventSource.close()
+    }
+
+  }, [])
+  */
+
+
   //useparams
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const chatId = 21; //rajouter chatId
+    const chatId = 7; //rajouter chatId
     const content = event.target[0].value;
 
     // const authorId = myUser.mercure.payload.userid; real id user
-    const authorId = 120
+    const authorId = 21
 
     var obj = new Object()
     obj.content = content

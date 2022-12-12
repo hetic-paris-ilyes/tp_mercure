@@ -60,6 +60,22 @@ class ChatController extends AbstractController
         if ($content == null || $chatId == null || $authorId == null) {
             var_dump(("Il manque un champ"));
         }
+        /*
+        $update = new Update(
+            [
+                "https://example.com/my-private-topic",
+                "https://example.com/chat/{$chatId}/?topic=" . urlencode("https://example.com/my-private-topic")
+            ],
+            json_encode([
+                'chatID' => $chatId,
+                'author' => $authorId,
+                'message' => $content
+            ]),
+            true
+        );
+
+        $hub->publish($update);
+        */
 
         $messageId = $messageRepository->newMessage($authorId, $chatId, $content, $userRepository, $chatRepository);
 
