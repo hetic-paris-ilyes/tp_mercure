@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import useGetUserList from '../Hook/useGetUserList'
+import useGetAllChats from '../Hook/useGetAllChats'
 import useBackendChat from '../Hook/useBackendChat'
 import { useContext } from 'react'
 import { userContext } from '../Context/UserContext'
@@ -7,7 +8,7 @@ import { Link } from 'react-router-dom'
 import { MessageCircle } from 'react-feather'
 import ContactPill from './ContactPill'
 
-export default function UserList () {
+export default function ChatList () {
   const parseJwt = token => {
     if (!token) {
       return
@@ -17,14 +18,13 @@ export default function UserList () {
     return JSON.parse(window.atob(base64))
   }
 
-  const [userList, setUserList] = useState([])
+  const [chatList, setChatList] = useState([])
 
   const { user } = useContext(userContext)
-  const getUserList = useGetUserList()
   const backendChat = useBackendChat()
   const myUser = parseJwt(user)
   const loggedUserID = user ? myUser.mercure.payload.userid : null
-//   console.log('loggedUserId : ', loggedUserID)
+  const getAllChats = useGetAllChats(loggedUserID)
 
   //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
 
@@ -33,7 +33,6 @@ export default function UserList () {
     const userId = e.target[0].value
     backendChat(userId).then(data => console.log('data : ', data))
   }
-  console.log('UserList.user : ', user)
 
   const handleMessage = e => {
     document
@@ -49,35 +48,31 @@ export default function UserList () {
     console.log(JSON.parse(e.data))
   }
   useEffect(() => {
-    getUserList().then(data => setUserList(data.users))
-
-    /*const url = new URL('http://localhost:9090/.well-known/mercure');
-        url.searchParams.append('topic', 'https://example.com/my-private-topic');
-
-        const eventSource = new EventSource(url, {withCredentials: true});
-        eventSource.onmessage = handleMessage;
-
-        return () => {
-            eventSource.close()
-        }*/
+    getAllChats(loggedUserID).then(data => setChatList(data.Chats))
   }, [])
 
-  return (
-    <div>
-      {userList.map(userItem =>
-        userItem.id !== loggedUserID ? (
-          <form key={userItem.id} className='contact-wrapper'>
-            <button
+  const renderChatList = (chatList) => {
+    if (chatList.length > 0) {
+      chatList.map(chat => {
+        <form key={chat.id} className='contact-wrapper'>
+          {console.log("Chat detail:", chat)}
+            <a
               className='btn btn-light w-100 text-start btn-contact'
               type='submit'
-              value={userItem.id}
+              value={chat.id}
+              href={`/chat/${chat.id}`}
             >
-              <ContactPill userName={userItem.username} />
-              {userItem.username} <MessageCircle size={25} />
-            </button>
+              {/* <ContactPill userName={userItem.username} />
+              {userItem.username} <MessageCircle size={25} /> */}
+            </a>
           </form>
-        ) : null
-      )}
+      })
+    }
+  }
+  return (
+    <div>
+      {console.log("ChatList : ", chatList)}
+        {renderChatList(chatList)}
     </div>
   )
 }

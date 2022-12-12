@@ -5,6 +5,7 @@ import { useContext, useState } from 'react'
 import { userContext } from '../Context/UserContext'
 import ContactPill from './ContactPill'
 import { User, MessageCircle } from 'react-feather'
+import ChatList from './ChatList'
 
 export default function Layout (props) {
   const parseJwt = token => {
@@ -54,7 +55,7 @@ export default function Layout (props) {
                   </h4>
                   <div>
                     {/* Chat things here */}
-                    <p>some chats </p>
+                    <ChatList />
                   </div>
                 </div>
                 <div className='menu-scrollable'>
