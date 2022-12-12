@@ -42,10 +42,11 @@ export default function ChatRoom () {
   }, [chatID, chat])
 
   //useparams
-  const handleSubmit = event => {
-    event.preventDefault()
-    const chatId = 21 //rajouter chatId
-    const content = event.target[0].value
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const chatId = 21; //rajouter chatId
+    const content = event.target[0].value;
+
     // const authorId = myUser.mercure.payload.userid; real id user
     const authorId = 120
 
@@ -54,8 +55,9 @@ export default function ChatRoom () {
     obj.chatId = chatId
     obj.authorId = authorId
 
-    var myMessage = JSON.stringify(obj)
-    usePostMessage(myMessage)
+    var myMessage= JSON.stringify(obj);
+    const sendMessage = await usePostMessage(myMessage);
+
   }
 
   return (

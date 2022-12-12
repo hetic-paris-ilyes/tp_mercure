@@ -51,6 +51,7 @@ class ChatController extends AbstractController
     #[Route('/createMessage', name: 'chat_post', methods: 'POST')]
     public function chatMessage(HubInterface $hub, Request $request, MessageRepository $messageRepository,  UserRepository $userRepository, ChatRepository $chatRepository)
     {
+        var_dump("aaaaa");
         $post_data = json_decode($request->getContent(), true);
         $content = $post_data['content'];
         $chatId = intval($post_data['chatId']);

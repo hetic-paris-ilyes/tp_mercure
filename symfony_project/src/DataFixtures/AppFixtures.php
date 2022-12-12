@@ -14,6 +14,5 @@ class AppFixtures extends Fixture
     {
         UserFactory::createMany(10);
         ChatFactory::createMany(3);
-        MessageFactory::createMany(10);
     }
 }
