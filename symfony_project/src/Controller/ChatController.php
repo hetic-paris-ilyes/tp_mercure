@@ -66,4 +66,15 @@ class ChatController extends AbstractController
             'message' => 'Message sent', $messageId
         ]);
     }
+
+    #[Route('/allChat', name: 'chat_all', methods: 'GET')]
+    public function getAllChats(ChatRepository $chatRepository)
+    {
+        $user_1 = intval($_GET["myUser"]);
+        $chats = $chatRepository->findByUser(intval($user_1));
+
+        return $this->json([
+            'Chats' => $chats
+        ]);
+    }
 }
