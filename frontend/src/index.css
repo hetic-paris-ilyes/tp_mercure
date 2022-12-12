@@ -19,27 +19,31 @@ code {
 }
 
 .section-chat {
+  padding-top: 100px;
+}
+
+.section-chat .messages {
   display: flex !important;
   flex-direction: column;
   flex-wrap: nowrap !important;
   gap: 15px;
-  padding: 100px 5% 15px 5% !important;
+  padding: 0px 5% 15px 5% !important;
   min-height: 60%;
   max-height: 80%;
   overflow: hidden scroll;
 }
 
-.section-chat::-webkit-scrollbar {
+.section-chat .messages::-webkit-scrollbar {
   width: 5px;
   /* width of the entire scrollbar */
 }
 
-.section-chat::-webkit-scrollbar-track {
+.section-chat .messages::-webkit-scrollbar-track {
   background: #D3DBE5;
   /* color of the tracking area */
 }
 
-.section-chat::-webkit-scrollbar-thumb {
+.section-chat .messages::-webkit-scrollbar-thumb {
   background-color: #7367f0;
   /* color of the scroll thumb */
   border-radius: 20px;
@@ -54,6 +58,8 @@ code {
   z-index: 1000;
   box-shadow: 0 0 15px -10px black;
   margin-left: 0 !important;
+  padding-left: 5%;
+
 }
 
 .btn-contact {
@@ -62,6 +68,8 @@ code {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+  min-width: 305px !important;
+  background-color: white !important;
 }
 
 .btn-contact svg {
@@ -145,8 +153,7 @@ code {
   font-size: 14px;
 }
 
-.message.contact {
-}
+.message.contact {}
 
 .message.currentUser {
   flex-direction: row-reverse;
@@ -165,7 +172,7 @@ code {
 }
 
 .menu-scrollable div {
-  height: 40vh;
+  height: 35vh; 
   overflow: hidden scroll;
 }
 
@@ -215,24 +222,29 @@ hr {
   align-content: center;
   justify-content: center;
   align-items: center;
+  height: max-content;
+  position: fixed;
+  bottom: 0px;
+  width: 82% !important;
 }
 
 .chat-tools form {
   gap: 15px;
 }
+
 .chat-tools button {
-    background-color: #7367f0;
-    border-radius: 50%;
-    padding: 15px;
-    width: 55px;
-    height: 55px;
-    border: none;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
+  background-color: #7367f0;
+  border-radius: 50%;
+  padding: 15px;
+  width: 55px;
+  height: 55px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .chat-tools button svg {
@@ -241,4 +253,41 @@ hr {
 
 .row {
   margin-left: 0 !important;
+}
+
+.navbar-toggler {
+  position: fixed;
+  top: 0;
+  z-index: 9500;
+  background-color: white;
+  transform: translate(0px, 15px);
+
+}
+
+.nav-wrapper {
+  max-width: min-content !important;
+  border: none;
+}
+
+.navbar {
+  max-width: 100% !important;
+  padding-top: 65px !important;
+}
+
+.menu-wrapper {
+  padding: 15px;
+}
+
+@media (min-width: 950px) {
+  .menu-wrapper {
+    display: block !important;
+  }
+
+  .navbar-toggler {
+    display: none;
+  }
+
+  .navbar {
+    padding-top: 0px !important;
+  }
 }

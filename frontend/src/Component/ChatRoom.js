@@ -1,9 +1,8 @@
 import { useContext } from 'react'
 import { Send } from 'react-feather'
-import { Col, Container, Row , Input, Form} from 'reactstrap'
+import { Col, Container, Row, Input, Form } from 'reactstrap'
 import { userContext } from '../Context/UserContext'
 import ContactPill from './ContactPill'
-
 
 export default function ChatRoom () {
   const parseJwt = token => {
@@ -27,24 +26,30 @@ export default function ChatRoom () {
       </Row>
 
       <Row className='section-chat'>
-        <div className='message contact'>
-          <ContactPill className='' userName={'Contact 1'} />
-          <p>
-            lorelscn ujsdnhvksn cfsdvhkdhvn cksjvbskvnkncs vzskvhsikv svknbdkvs{' '}
-          </p>
-        </div>
+        <div className='messages'>
+          <div className='message contact'>
+            <ContactPill className='' userName={'Contact 1'} />
+            <p>
+              lorelscn ujsdnhvksn cfsdvhkdhvn cksjvbskvnkncs vzskvhsikv
+              svknbdkvs{' '}
+            </p>
+          </div>
 
-        <div className='message currentUser'>
-          <ContactPill className='currentUser' userName={'Contact 1'} />{' '}
-          <p>
-            lorelscn ujsdnhvksn cfsdvhkdhvn cksjvbskvnkncs vzskvhsikv svknbdkvs{' '}
-          </p>
+          <div className='message currentUser'>
+            <ContactPill className='currentUser' userName={'Contact 1'} />{' '}
+            <p>
+              lorelscn ujsdnhvksn cfsdvhkdhvn cksjvbskvnkncs vzskvhsikv
+              svknbdkvs{' '}
+            </p>
+          </div>
         </div>
       </Row>
       <Row className='chat-tools'>
         <Form className='d-flex'>
-           <Input type='textarea' placeholder='Ecrivez votre message ...' />
-           <button type='submit'><Send size={35} /></button>
+          <Input type='textarea' placeholder='Ecrivez votre message ...' />
+          <button type='submit'>
+            <Send size={35} />
+          </button>
         </Form>
       </Row>
     </Row>
