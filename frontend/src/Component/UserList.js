@@ -50,7 +50,7 @@ export default function UserList () {
   }
   useEffect(() => {
     getUserList().then(data => setUserList(data.users))
-    getMessagesChat(4).then(data => console.log(data))
+    // getMessagesChat(4).then(data => console.log(data))
     /*const url = new URL('http://localhost:9090/.well-known/mercure');
         url.searchParams.append('topic', 'https://example.com/my-private-topic');
 

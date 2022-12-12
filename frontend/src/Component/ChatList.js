@@ -8,18 +8,7 @@ import { Link } from 'react-router-dom'
 import { MessageCircle } from 'react-feather'
 import ContactPill from './ContactPill'
 
-const TestChat = ({ chatId }) => {
-  const getChat = useGetMessagesChat()
-  const [chat, setChat] = useState({})
-
-  useEffect(() => {
-    getChat(chatId).then(res => setChat(res))
-  }, [])
-
-  return <p>chat</p>
-}
-
-export default function ChatList () {
+export default function ChatList ({ chat }) {
   const parseJwt = token => {
     if (!token) {
       return
@@ -29,14 +18,8 @@ export default function ChatList () {
     return JSON.parse(window.atob(base64))
   }
 
-  const [chatList, setChatList] = useState([])
-  const [testi, setTesti] = useState([])
-
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
-  const loggedUserID = user ? myUser.mercure.payload.userid : null
-  const getAllChats = useGetAllChats(loggedUserID)
-  const getAllMessages = useGetMessagesChat()
 
   //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
 
@@ -46,30 +29,41 @@ export default function ChatList () {
   //   getChat(userId).then(data => console.log('data : ', data))
   // }
 
-  const handleMessage = e => {
-    document
-      .querySelector('h1')
-      .insertAdjacentHTML(
-        'afterend',
-        '<div class="alert alert-success w-75 mx-auto">Ping !</div>'
-      )
-    window.setTimeout(() => {
-      const $alert = document.querySelector('.alert')
-      $alert.parentNode.removeChild($alert)
-    }, 2000)
-    console.log(JSON.parse(e.data))
+  const getContentLastMessagePreview = messages => {
+    const render = messages.map((message, index) => {
+      if (index === messages.length - 1) {
+        return (
+          <i className='message-content-preview' key={index}>
+            {message.content}
+          </i>
+        )
+      }
+    })
+    return render
   }
-  useEffect(() => {
-    getAllChats(loggedUserID).then(data => setChatList(data.Chats))
-    getAllMessages(4).then(data => setTesti(data))
-    console.log("les datas:", testi)
-  }, [])
-
+  console.log(chat, 'CHAT')
   return (
     <div>
-      {chatList.length !== 0
-        ? chatList.map(chat => {
-            return <TestChat chatId={chat} />
+      {chat
+        ? chat.map(data => {
+            console.log(data, 'DATA')
+            return (
+           
+              <a
+                key={data.id}
+                className='btn btn-light w-100 text-start btn-message'
+                type='submit'
+                value={data.id}
+                href={`/chat/${data.id}`}
+              >
+                {/* <ContactPill userName={userItem.username} />
+              {userItem.username} <MessageCircle size={25} /> */}
+                <strong className='message-preview'>{data.label}</strong>
+                <i className='message-content-preview'>
+                  {getContentLastMessagePreview(data.messages)}
+                </i>
+              </a>
+            )
           })
         : null}
     </div>

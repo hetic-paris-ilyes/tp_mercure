@@ -6,6 +6,9 @@ import { userContext } from '../Context/UserContext'
 import ContactPill from './ContactPill'
 import { User, MessageCircle } from 'react-feather'
 import ChatList from './ChatList'
+import { useEffect } from 'react'
+
+import useGetMessagesChat from '../Hook/useGetMessagesChat'
 
 export default function Layout (props) {
   const parseJwt = token => {
@@ -17,9 +20,16 @@ export default function Layout (props) {
     return JSON.parse(window.atob(base64))
   }
   const [open, setOpen] = useState(false)
+  const [chat, setChat] = useState([])
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
   const loggedUserName = user ? myUser.mercure.payload.username : null
+  const getMessagesChat = useGetMessagesChat()
+
+  useEffect(() => {
+    getMessagesChat(4).then(data => setChat(data.chat))
+  }, [])
+  
   return (
       <Row className='main'>
         <NeedAuth>
@@ -54,7 +64,7 @@ export default function Layout (props) {
                   </h4>
                   <div>
                     {/* Chat things here */}
-                    <ChatList />
+                    <ChatList chat={chat}/>
                   </div>
                 </div>
                 <div className='menu-scrollable'>
