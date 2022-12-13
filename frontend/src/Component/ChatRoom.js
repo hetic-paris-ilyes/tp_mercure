@@ -63,11 +63,11 @@ export default function ChatRoom () {
   //useparams
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const chatId = 7; //rajouter chatId
+    const chatId = 9; //rajouter chatId
     const content = event.target[0].value;
 
-    // const authorId = myUser.mercure.payload.userid; real id user
-    const authorId = 21
+    const authorId = myUser.mercure.payload.userid;
+    // const authorId = 21
 
     var obj = new Object()
     obj.content = content
@@ -83,7 +83,7 @@ export default function ChatRoom () {
     <Row className='main-chat'>
       <Row className='header-chat'>
         <h6 className='session-user'>
-          {contacts?.length > 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : null }
+          {/* {contacts?.length > 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : null } */}
         </h6>
       </Row>
 
