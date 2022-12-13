@@ -8,6 +8,7 @@ import { User, MessageCircle } from 'react-feather'
 import ChatList from './ChatList'
 import { useEffect } from 'react'
 
+import useGetAllChats from "../Hook/useGetAllChats"
 import useGetMessagesChat from '../Hook/useGetMessagesChat'
 
 export default function Layout (props) {
@@ -21,13 +22,17 @@ export default function Layout (props) {
   }
   const [open, setOpen] = useState(false)
   const [chat, setChat] = useState([])
+  const [all, setAll] = useState([])
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
   const loggedUserName = user ? myUser.mercure.payload.username : null
   const getMessagesChat = useGetMessagesChat()
+  const getAllChats = useGetAllChats()
 
   useEffect(() => {
-    getMessagesChat(4).then(data => setChat(data.chat))
+    getMessagesChat(31).then(data => setChat(data.chat))
+    getAllChats(31).then(data => setAll(data.Chats))
+    console.log(all, "AAALL")
   }, [])
   
   return (
