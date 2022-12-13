@@ -79,11 +79,11 @@ class ChatRepository extends ServiceEntityRepository
 
     public function findByUser ($id1){
         return $this->createQueryBuilder('c')
-            ->select("c")
+            ->select("c, messages, users")
             ->innerJoin('c.users',  'u', "WITH", 'u.id = :id')
-            ->innerJoin('c.users', 'users')
+            ->leftJoin('c.users', 'users')
             ->addSelect('users')
-            ->innerJoin('c.messages', 'messages')
+            ->leftJoin('c.messages', 'messages')
             ->addSelect('messages')
             ->setParameter('id', $id1)
             ->getQuery()
