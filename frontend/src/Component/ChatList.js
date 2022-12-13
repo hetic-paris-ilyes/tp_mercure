@@ -8,8 +8,7 @@ import { Link } from 'react-router-dom'
 import { MessageCircle } from 'react-feather'
 import ContactPill from './ContactPill'
 
-export default function ChatList ({ chat }) {
-  console.log(chat, 'CHAT')
+export default function ChatList ({ chat, userID }) {
   const parseJwt = token => {
     if (!token) {
       return
@@ -22,6 +21,8 @@ export default function ChatList ({ chat }) {
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
 
+  const users = chat.users
+
   //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
 
   // const handleSubmit = e => {
@@ -29,6 +30,28 @@ export default function ChatList ({ chat }) {
   //   const userId = e.target[0].value
   //   getChat(userId).then(data => console.log('data : ', data))
   // }
+
+  const getPill = (members, userId) => {
+    const render = members.map(member => {
+      console.log(userId, "========", member.id)
+      return (
+        <ContactPill className={`${
+          userId === member.id ? 'currentUser' : 'contact'
+        }`} key={member.id} userName={member.username} />
+        )
+    })
+    return ( <span className='d-flex'>{render}</span>)
+   
+  }
+
+  const getMembers = members => {
+    const users = []
+    members.map(member => {
+      users.push(member.username)
+    })
+    const userString = users.join(', ')
+    return <strong>{userString}</strong>
+  }
 
   const getContentLastMessagePreview = messages => {
     const render = messages.map((message, index) => {
@@ -43,7 +66,7 @@ export default function ChatList ({ chat }) {
     return render
   }
   return (
-    <div>
+    <span>
       {chat ? (
         <a
           key={chat.id}
@@ -52,14 +75,16 @@ export default function ChatList ({ chat }) {
           value={chat.id}
           href={`/chat/${chat.id}`}
         >
-          {/* <ContactPill userName={userItem.username} />
-              {userItem.username} <MessageCircle size={25} /> */}
-          <strong className='message-preview'>{chat.label}</strong>
-          <i className='message-content-preview'>
-            {getContentLastMessagePreview(chat.messages)}
-          </i>
+          <h6 className='message-members'>{getPill(chat.users, userID)}
+          {getMembers(chat.users)}</h6>
+          <span className='message-preview'>{chat.label}</span>
+          {chat.messages ? (
+            <i className='message-content-preview'>
+              {getContentLastMessagePreview(chat.messages)}
+            </i>
+          ) : null}
         </a>
       ) : null}
-    </div>
+    </span>
   )
 }

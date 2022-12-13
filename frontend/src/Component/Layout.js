@@ -26,13 +26,14 @@ export default function Layout (props) {
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
   const loggedUserName = user ? myUser.mercure.payload.username : null
+  const loggedUserID = user ? myUser.mercure.payload.userid : null
   const getMessagesChat = useGetMessagesChat()
   const getAllChats = useGetAllChats()
 
   useEffect(() => {
     // getMessagesChat(31).then(data => setChat(data.chat))
-    getAllChats(31).then(data => setAll(data.Chats))
-  }, [])
+    getAllChats(loggedUserID).then(data => setAll(data.Chats))
+  }, [loggedUserID])
   
   return (
       <Row className='main'>
@@ -69,8 +70,7 @@ export default function Layout (props) {
                   <div>
                     {/* Chat things here */}
                     {all.length !== 0 ? all.map(chat => {
-                        console.log("onmap", chat)
-                        return <ChatList chat={chat}/>
+                        return <ChatList chat={chat} userID={loggedUserID}/>
                     }) : null}
                   </div>
                 </div>

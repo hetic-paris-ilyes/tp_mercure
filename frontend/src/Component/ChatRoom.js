@@ -30,8 +30,9 @@ export default function ChatRoom () {
   const getMessagesChat = useGetMessagesChat()
 
   const getContact = messages => {
-    const tmp_members = messages?.map(message => {
-        if (message.author.id !== loggedUserID) return message.author
+    let tmp_members = []
+    messages?.map(message => {
+        if (message.author.id !== loggedUserID) tmp_members.push(message.author)
     })
     setContacts(tmp_members)
   }
@@ -63,7 +64,6 @@ export default function ChatRoom () {
   //useparams
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const chatId = 9; //rajouter chatId
     const content = event.target[0].value;
 
     const authorId = myUser.mercure.payload.userid;
@@ -71,7 +71,7 @@ export default function ChatRoom () {
 
     var obj = new Object()
     obj.content = content
-    obj.chatId = chatId
+    obj.chatId = chatID
     obj.authorId = authorId
 
     var myMessage= JSON.stringify(obj);
@@ -83,13 +83,14 @@ export default function ChatRoom () {
     <Row className='main-chat'>
       <Row className='header-chat'>
         <h6 className='session-user'>
-          {/* {contacts?.length > 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : null } */}
+          {/* {console.log(contacts, "co")} */}
+          {contacts && contacts.length !== 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : "Nouvelle conversation" }
         </h6>
       </Row>
 
       <Row className='section-chat'>
         <div className='messages'>
-          {chat?.messages?.map(message => {
+          {chat?.messages ? chat.messages.map(message => {
             const author = message.author
             return (
               <div
@@ -102,7 +103,7 @@ export default function ChatRoom () {
                 <p>{message.content}</p>
               </div>
             )
-          })}
+          }) : <div className='empty-chat'>Il n'y a pas encore de messages.</div> }
           {/* <div className='message contact'>
             <ContactPill className='' userName={'Contact 1'} />
             <p>
