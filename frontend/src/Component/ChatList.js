@@ -9,6 +9,7 @@ import { MessageCircle } from 'react-feather'
 import ContactPill from './ContactPill'
 
 export default function ChatList ({ chat }) {
+  console.log(chat, 'CHAT')
   const parseJwt = token => {
     if (!token) {
       return
@@ -43,27 +44,22 @@ export default function ChatList ({ chat }) {
   }
   return (
     <div>
-      {chat
-        ? chat.map(data => {
-            return (
-           
-              <a
-                key={data.id}
-                className='btn btn-light w-100 text-start btn-message'
-                type='submit'
-                value={data.id}
-                href={`/chat/${data.id}`}
-              >
-                {/* <ContactPill userName={userItem.username} />
+      {chat ? (
+        <a
+          key={chat.id}
+          className='btn btn-light w-100 text-start btn-message'
+          type='submit'
+          value={chat.id}
+          href={`/chat/${chat.id}`}
+        >
+          {/* <ContactPill userName={userItem.username} />
               {userItem.username} <MessageCircle size={25} /> */}
-                <strong className='message-preview'>{data.label}</strong>
-                <i className='message-content-preview'>
-                  {getContentLastMessagePreview(data.messages)}
-                </i>
-              </a>
-            )
-          })
-        : null}
+          <strong className='message-preview'>{chat.label}</strong>
+          <i className='message-content-preview'>
+            {getContentLastMessagePreview(chat.messages)}
+          </i>
+        </a>
+      ) : null}
     </div>
   )
 }

@@ -21,7 +21,7 @@ export default function Layout (props) {
     return JSON.parse(window.atob(base64))
   }
   const [open, setOpen] = useState(false)
-  const [chat, setChat] = useState([])
+//   const [chat, setChat] = useState([])
   const [all, setAll] = useState([])
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
@@ -30,9 +30,8 @@ export default function Layout (props) {
   const getAllChats = useGetAllChats()
 
   useEffect(() => {
-    getMessagesChat(31).then(data => setChat(data.chat))
+    // getMessagesChat(31).then(data => setChat(data.chat))
     getAllChats(31).then(data => setAll(data.Chats))
-    console.log(all, "AAALL")
   }, [])
   
   return (
@@ -69,7 +68,10 @@ export default function Layout (props) {
                   </h4>
                   <div>
                     {/* Chat things here */}
-                    <ChatList chat={chat}/>
+                    {all.length !== 0 ? all.map(chat => {
+                        console.log("onmap", chat)
+                        return <ChatList chat={chat}/>
+                    }) : null}
                   </div>
                 </div>
                 <div className='menu-scrollable'>
