@@ -15,6 +15,10 @@ export default function ChatRoom () {
   const chatID = parseUrl[parseUrl.length - 1]
   const [chat, setChat] = useState([])
   const [contacts, setContacts] = useState([])
+  const [contentMsg, setContentMsg] = useState();
+  const handleChange = (event) => {
+    setContentMsg(event.target.value);
+  }
 
   const parseJwt = token => {
     if (!token) {
@@ -76,6 +80,7 @@ export default function ChatRoom () {
 
     var myMessage= JSON.stringify(obj);
     const sendMessage = await usePostMessage(myMessage);
+    setContentMsg("");
 
   }
 
@@ -123,7 +128,7 @@ export default function ChatRoom () {
       </Row>
       <Row className='chat-tools'>
         <Form className='d-flex' onSubmit={handleSubmit}>
-          <Input type='textarea' placeholder='Ecrivez votre message ...' />
+          <Input type='textarea' placeholder='Ecrivez votre message ...' value={contentMsg} onChange={handleChange} />
           <button type='submit'>
             <Send size={35} />
           </button>
