@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from 'react'
+import {useLocation, useNavigate, navigate} from "react-router-dom";
 import useGetUserList from '../Hook/useGetUserList'
+import useGetRoomId from '../Hook/useGetRoomId'
 import { useContext } from 'react'
 import { userContext } from '../Context/UserContext'
 import { Link } from 'react-router-dom'
@@ -8,6 +11,8 @@ import ContactPill from './ContactPill'
 import useGetMessagesChat from '../Hook/useGetMessagesChat'
 
 export default function UserList () {
+  const navigate = useNavigate();
+
   const parseJwt = token => {
     if (!token) {
       return
@@ -27,11 +32,13 @@ export default function UserList () {
 
   //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
 
-  // const handleSubmit = e => {
-  //   e.preventDefault()
-  //   const userId = e.target[0].value
-  //   backendChat(userId).then(data => console.log('data : ', data))
-  // }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const userId = e.target[0].value
+    const chatId = await useGetRoomId(userId, loggedUserID);
+    window.location.href = `/chat/${chatId.id_chat}`;
+  }
 
   const handleMessage = e => {
     document
@@ -64,7 +71,7 @@ export default function UserList () {
     <div>
       {userList.map(userItem =>
         userItem.id !== loggedUserID ? (
-          <form key={userItem.id} className='contact-wrapper'>
+          <form key={userItem.id} className='contact-wrapper' onSubmit={handleSubmit}>
             <button
               className='btn btn-light w-100 text-start btn-contact'
               type='submit'

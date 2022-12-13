@@ -25,11 +25,9 @@ class ChatController extends AbstractController
 
         $chatroom = $chatRepository->getChatsByUsers($user_1, $user_2);
         if ($chatroom !== null) {
-            var_dump("Conversation existante");
             $idChat = $chatroom["id"];
             //return $this->redirectToRoute('chat_messages', ['id' => $idChat]);
         } else {
-            var_dump("Pas de conv");
             $idChat = $chatRepository->newChat($user_1, $user_2, $userRepository);
             //return $this->redirectToRoute('chat_messages', ['id' => $idChat]);
         }

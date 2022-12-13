@@ -1,8 +1,14 @@
-export default function useGetRoomId() {
-    return function (userTo, myUser) {
-        return fetch(`http://localhost:8245/getChatRoom?${userTo}&${myUser}`, {
-            method: 'GET',
+export default async function useGetRoomId(userTo, myUser) {
+    console.log(userTo, myUser)
+    try {
+        const res = await fetch(`http://localhost:8245/getChatRoom?userTo=${userTo}&myUser=${myUser}`, {
+            method: 'GET'
         })
-            .then(data => data.json())
+        if (res) 
+        return res.json()
+    } catch (error) {
+        console.log(error)
+        return error;
     }
+
 }
