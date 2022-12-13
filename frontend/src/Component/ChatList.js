@@ -33,7 +33,6 @@ export default function ChatList ({ chat, userID }) {
 
   const getPill = (members, userId) => {
     const render = members.map(member => {
-      console.log(userId, "========", member.id)
       return (
         <ContactPill className={`${
           userId === member.id ? 'currentUser' : 'contact'

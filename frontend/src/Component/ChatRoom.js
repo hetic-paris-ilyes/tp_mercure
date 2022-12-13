@@ -88,7 +88,6 @@ export default function ChatRoom () {
     <Row className='main-chat'>
       <Row className='header-chat'>
         <h6 className='session-user'>
-          {/* {console.log(contacts, "co")} */}
           {contacts && contacts.length !== 0 ? <><ContactPill className='' userName={contacts[0].username} /> {contacts[0].username}</> : "Nouvelle conversation" }
         </h6>
       </Row>

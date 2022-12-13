@@ -33,7 +33,7 @@ export default function Layout (props) {
   useEffect(() => {
     // getMessagesChat(31).then(data => setChat(data.chat))
     getAllChats(loggedUserID).then(data => setAll(data.Chats))
-  }, [loggedUserID])
+  }, [loggedUserID, all])
   
   return (
       <Row className='main'>
