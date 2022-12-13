@@ -22,14 +22,6 @@ export default function ChatList ({ chat }) {
   const { user } = useContext(userContext)
   const myUser = parseJwt(user)
 
-  //TODO handlesubmit to get chatid et ensuite une redirection vers chat/:chatid
-
-  // const handleSubmit = e => {
-  //   e.preventDefault()
-  //   const userId = e.target[0].value
-  //   getChat(userId).then(data => console.log('data : ', data))
-  // }
-
   const getContentLastMessagePreview = messages => {
     const render = messages.map((message, index) => {
       if (index === messages.length - 1) {
